@@ -1,0 +1,449 @@
+HTML5
+
+1、input
+	type属性值
+		number	//value=默认值 max=最大值 min=最小值 step=步长	
+		email	//提交时，会验证数据是否符合email的规范（有@，并且@后面有内容）
+		search	//搜索类型，提供了快速清除的功能
+		url		//提交时验证是否符合url的规范（http://****）
+		tel		//电话号码类型，在移动设备中，会显示拨号键盘
+		range	//提供一个滑块组件允许用户选定范围内的值	value=默认值 max=最大值  min=最小值 step=步长
+		color	//提供一个颜色拾取器
+		date	//提供一个日期控件
+		month	//提供一个月份控件
+		week	提供一个星期控件
+	新属性
+		autofocus    自动获取焦点
+		placeholder  占位符
+		multiple     允许输入多个值(用逗号分隔) email
+		form        用于把输入域放置form外部
+			<form id="f5">
+			</form>
+			<input type="text" name="age"  form="f5" />
+		与验证相关属性
+		requried	必填
+		maxlength		最大长度
+		minlength		最短长度
+		min		最小值
+		max		最大值
+		pattern="正则表达"
+
+ 2、datalist  	建议列表
+	通常配置input创建建议列表,当用户不清楚要输入内容提供建议
+		<datalist id="list3">     默认情况下datalist不可见
+			<option>xx</option>
+			<option>yy</option>
+		</datalist>
+		<input type="text"  list="list3" />	input文本框获取焦点时会显示option中的内容
+
+3、progress		进度条
+	显示一个进度条两种形式
+		左右晃动进度条
+			<progress></progress>  
+		具有指定进度值进度条
+			<progress value="0.7" /> 
+		会动的进度条
+			<progress value="0" id="p3"/>
+			<script>
+				var p3=document.getElementById("p3");
+				setInterval(function(){
+					p3.value += 0.01
+				}, 16.7)
+			</script>
+
+4、meter		刻度尺
+    <meter 
+		min="最小值" 
+		max="最大值" 
+		low="下限" 
+		high="上限"
+		optimum="最佳值"
+		value="当前值">
+	</meter>
+    随机当前值不同改变不同颜色
+		当前值离最佳值非常远   红 危险
+		当前值离最佳值比较近   黄 警告
+		当前值离最佳值非常近   绿 正常
+
+    
+5、视频(重点掌握)
+	Flash                  H5
+		-Flash绘制(AS/Flex) -> Canvas+SVG
+		-Flash动画(游戏)-->  Canvas+第三方游戏库
+		-Flash视频(音频)-->  video/audio(90%)
+		-Flash存储     -->  WebStorage
+ 
+	视频使用
+		<video src="x.mp4"></video>
+	知识补充 
+		(1)常用视频格式: .mp4 .flv .webm .ogg
+		(2)如果浏览器播放指定视频,需要安装插件 "解码器"
+			x.mp4 -> 安装mp4解码器
+			x.flv  -> 安装 flv 解码器
+	遇到问题不能播放指定视频文件
+	解决:使用工具软件"格式工厂"  x.mp4->x.flv->x.ogg
+		<video>
+			<source  src="x.mp4"/>
+			<source  src="x.flv"/>
+			<source  src="x.ogg"/>
+			您的浏览器版本太低，请升级!!!
+		</video>
+	video标签属性
+		-controls	-是否显示播放控件 <video controls >
+		-autoplay	-是否自动播放     <video autoplay>
+		-loop		-是否循环播放     <video loop>
+		-muted		-是否是静音播放   
+		-poster		-在播放视频之前广告 poster="x.jpg"
+		-preload		-预加载策略
+			值	
+				auto:预加载一定时长视频与元数据
+				metadata:预加载元数据
+				none:不预加载数据
+		#元数据:视频时长,尺寸,第一帧画面
+	video js属性
+		.volume=1    当前音量 (0~1)
+		.playbackRate=num 回放速率 大于1快放 小于1慢播
+		.paused  当前视频是否处于暂停状态返回值为 true false
+		.play()       播放视频
+		.pause()     暂停播放视频
+		.onplay=functin(){}     当前视频开始播放时触发事件
+		.onpause=functin(){}    当前视频暂停播放时触发事件
+		.duration	获取到视频总长度
+		.currentTime	获取到当前播放事件进度
+
+	video 特殊事件
+			canplaythrough	当视频加载结束可以播放触发的事件
+			ended	视频播放结束时触发的事件
+			timeupdate	视频正在播放触发的事件【多次触发】
+		通过监听绑定事件 例:
+			v3.addEventListener("canplaythrough",function(){
+				console.log("视频加载成功可以播放");
+				console.log("视频总时长为"+v3.duration)
+			})
+	图片的特殊css属性
+		一般用于video视频处理
+			object-fit=
+				fill  "填充" 默认值 将视频拉伸操作填满空间
+				contain "包含"保持原有尺寸比例，容器空白
+				cover  "覆盖"保持原有尺寸比例,宽度或者高度，至少一个可以与父元素一致[裁切]
+
+6、音频
+   音频格式: x.mp3 x.wav x.ogg
+   标签	<audio src="x.mp3"></audio>
+   属性方法和事件与视频相同
+		例：
+			<audio src="../res/bg.mp3" id="a3"></audio>
+			<input type="checkbox" id="cb">
+			<script>
+				var a3=document.getElementById("a3")
+				var cb=document.getElementById("cb")
+				//绑定元素发生改变时触发的事件
+				cb.onchange=function(){
+					if(this.checked){
+						a3.play();
+					}else{
+						a3.pause();
+					}
+				}
+			</script>
+
+7、绘图(重点)
+	在网页中绘制图形:股票走势,销售统计图,网页特效,网页游戏..
+	网页中绘图技术三种
+		svg:      	2D矢量图
+			使用线条绘制图形，可以无限放大图形或者缩小不失真.
+		canvas:    	2D位图
+			使用像素点组件，颜色非常清晰，不能放大放大失真
+		webgl:    	3D位图,尚未纳入H5标准
+
+	canvas	绘制步骤
+		一、
+			创建画布标签
+				<canvas id="c3" width="500" height="400"></canvas>
+				注意事项:画布宽度和高度只能使用js或者标签属性来赋值，不能使用css赋值
+					原因:css赋值图形变形...
+		二、
+			通过js获取画布，和画布上对应上下文对象（画笔对象,一个画布上只能有一只画笔）
+				var c3 = document.getElementById("c3");
+				var ctx = c3.getContext("2d");//2D画笔对象
+		三、绘制图形
+			绘制矩形
+				空心矩形
+					ctx.lineWidth = 1;	//定义画笔对象宽度，（边框粗细）
+					ctx.strokeStyle = "#fff"	//描边样式(边框颜色)
+					ctx.strokeRect(x,y,w,h)		//空心
+				实心矩形
+					ctx.fillStyle = "#fff";		//设置填充样式(颜色)
+					ctx.fillRect(x,y,w,h);	//实心	
+				//x,y 矩形左上角位置
+				//w,h 矩形宽度和高度
+				//矩形定位点在自己左上角
+
+			绘制文本
+				ctx.font = "19px SimHei";  //设置文字大小字体
+				ctx.textBaseline = "top";  //设置文本基线
+				var str = "abcxyz";		//设置文字内容
+				ctx.fillText(str,x,y);       //绘制填充文本(实心)
+				ctx.strokeText(str,x,y);    //绘制描边文本(空心)
+			
+			绘制任意图形
+				path:由多个坐标点组件任意图形.图形不可见，可以使用"描边" "填充"，使图形可见
+				ctx.beginPath(): 	//开始一条新路径
+				ctx.moveTo(x,y);	//起点
+				ctx.lineTo(x,y);   	//从上一个点到指定点画一条直线
+				ctx.closePath(); 	//闭合一条路径即终点和起点连接到一起，用户封闭图形的绘制	
+				ctx.strokeStyle = "#fff";ctx.stroke();     //描边以及颜色
+				ctx.fillStyle = "#fff";ctx.fill();    //填充以及颜色
+			
+			绘制圆
+				ctx.beginPath(): 	//开始一条新路径
+				ctx.arc(cx,cy,r,start,end);		//定义圆
+				ctx.strokeStyle = "#fff";ctx.stroke();     //描边以及颜色(空心圆)
+				ctx.fillStyle = "#fff";ctx.fill();    //填充以及颜色(实心圆)
+					cx,cy	圆心位置
+					r	半径
+					start	起始角度
+					end		结束角度
+						 #公式:  角度度数/180*Math.PI=弧度
+  
+			绘制图像
+				canvas属于客户端技术(运行在客户浏览器)
+					但是图片保存服务器中,所以需要先下载绘制图片,且等待下载完成再绘制.
+				图片为什么保存服务器
+					(1)图片有版权
+					(2)图片数量巨大
+				绘制流程
+				创建图片对象       
+					var p3 = new Image();
+				下载图片           
+					p3.src = "url"
+				绑定事件[下载完成后触发的事件]  
+					p3.onload = function(){
+						//绘制图片 
+						ctx.drawImage(p3,x,y);	//原始大小 
+						ctx.drawImage(p3,x,y,w,h)	//拉伸	x,y 图片左上角的位置 w,h 设置图片的宽度
+					}
+				
+
+			canvas--变形(重点)
+				ctx.rotate(弧度)	//旋转画笔对象,旋转轴心在画布原点,旋转角度会(累加)
+				ctx.translate(x,y);		//将整个画布原点平移某个点
+				定时器+旋转+绘制  例：
+					ctx.translate(250,200);	//将画布原点移动到该位置
+					var t = setInterval(function(){
+						//ctx.clearRect(0,0,500,400);
+						ctx.rotate(15*Math.PI/180);	
+						ctx.drawImage(p3,-100,-50);	//图片相对原点位置
+					},200);
+				ctx.save()    保存画笔状态
+				ctx.restore(); 恢复画笔状态
+     
+			canvas--渐变对象(了解)
+				渐变对象:是一种图像效果从一种颜色慢慢过渡到另一种彩色.
+				创建渐变对象
+					var g = ctx.createLinearGradient(x1,y1,x2,y2);
+						x1 y1 起点坐标
+						x2 y2 终点坐标
+				添加颜色点
+					g.addColorStop(offset,color)
+						offset 偏移量
+						color  颜色
+				将渐变对象赋值 填充样式或者描边样式
+					ctx.fillStyle = g;
+						或
+					ctx.strokeStyle = g;
+				绘制图形
+					ctx.fillRect(0,0,500,100);
+				
+				清除画布上一个矩形范围内的元素
+					ctx.clearRect(x,y,w,h)
+
+	svg-网页绘图技术
+			canvas和svg之间的区别
+						canvas				svg
+		绘制图像类型	2D位图				2D矢量图
+		如何绘图		使用js代码绘图		使用标签绘图
+		事件绑定		只能绑定画布上		每个图形都可以绑定事件
+		应用场景		网页特效,小游戏		地图
+
+		创建画布
+			<svg id="s3" width="500" height="400">
+				....
+			</svg>
+
+		svg-矩形
+			在画布中添加标签
+				<rect x="" y="" width="" height="" fill="填充颜色" fill-opacity="填充透明度" stroke="描边颜色" stroke-opcity="描边透明度"></rect>
+					x,y左上角坐标	width,height矩形宽高	
+		svg-圆形
+			<circle cx="" cy="" r=""></circle>
+				cx,cy 圆心
+				r    半径
+			 
+			技巧:阻止当圆再次被点击
+				this.onclick = null;
+
+		svg 绘图特性:
+			1:动态添加svg图形
+				(1)html字符串拼接图形
+					var html = "<rect></rect>";
+					svg.innerHTML = html;
+				(2)创建对象
+					var rect = document.createElemetNS(
+						"http://www.w3.org/2000/svg",
+						"图形标签");
+					svg.appendChild(rect);
+			2:图形使用js赋值属性
+				不能使用html dom 方法,只能使用核心DOM方法
+				rect.x = 100; rect.y = 80;           error
+				rect.setAttribute("x",100);         ok
+				rect.setAttribute("y",80);          ok
+				var w = rect.getAttribute("width")   ok
+			3:svg图形样式可以使用css声明
+
+		svg-椭圆
+			<ellipse rx="" ry="" cx="" cy=""></ellipse>
+			cx,cy 圆心
+			rx,ry 水平半径,垂直半径
+
+		svg-直线
+			<line x1="" y1="" x2="" y2="" stroke-width="" stroke-linecap="" stroke=""></line>
+			x1,y1 起点坐标
+			x2,y2 终点坐标
+			stroke-width  边线宽度
+			stroke-linecap 顶端外观  round
+			stroke       边线样式
+
+		svg--折线
+			一条折线上可以有任意多个连续点(x,y)
+				<polyline points="50,50 120,50 110,90 .." stroke=""   fill="transparent"></polyline>
+		svg--文本/图像
+			<text font-size="" fill="" storke="" x="" y="">文本内容</text>
+			<image xlink:href="图片路径" x="" y="" width="" height=""></image>
+		svg--渐变对象/滤镜
+			渐变对象
+				<defs>  定义特效对象
+					<linearGradient id="g3" x1="" y1="" x2="" y2="">
+						<stop  offset="" stop-color=""/>
+					</linearGradient>
+				</defs>
+					x1,y1     起点坐标  0% 0%
+					x2,y2     终点坐标  100% 0%
+					offset     偏移量    0%  50% 100%
+					stop-color 颜色点    #fff
+				<ANY fill="url(#g3)" stroke="url(#g3)"></ANY>
+		滤镜(高斯模糊滤镜)
+			<defs>
+				<filter id="f3">
+					<feGaussianBlur stdDeviation="数字:模糊度" />
+				</filter>
+			</defs>
+			<ANY filter="url(#f3)"></ANY>
+				滤镜列表:
+				https://developer.mozilla.org/zh-CN/docs/Web/SVG/Element/filter
+	第三方绘图库 echarts--(重点)
+		d3.js   国外公司
+		echarts 百度     https://echarts.baidu.com/
+      
+		为什么要使用第三方绘图库
+			-绘图库功能更为丰富
+			-降低绘制复杂图形难度
+	第三方绘图库 echarts--使用
+		1:下载echats库文件
+			https://echarts.baidu.com/
+		2:创建存放图形容器
+			<div id="main" style="width:height.."></div>
+		3:将echarts.js文件引入当前html文件中
+		4:获取容器并且创建echarts对象
+			var main = document.getElemenetById("main");
+			var mychart = echarts.init(main)
+		5:*创建配置项[柱状统计图]
+			var option = {
+				title:{text:"echarts入门示例"},
+				xAxis:{data:["衬衫","袜子","裤子"]},
+				yAxis:{},
+				series:[{type:"bar",data:[100,1,10]}]
+			}
+		6:将配置项添加echarts对象中即可
+			mychart.setOption(option);
+
+	地理定位(了解)
+		geolocation 通过使用浏览器js获取当前用户位置信息(经度;纬度;海拨;速度)数据,用于实例 
+		LBS(Location Base Servic)基于位置服务
+			饿了么,滴滴打车...
+		手机浏览器如何获取定位
+    (1)首先手机GPS芯片与网络定位精度在米范围
+    (2)次选手机通基站
+    
+    HTML5中提供一个新对象用于获取当浏览器位置信息
+		window.navigator.geolocation{
+			getCurrentPostion:fn,    //获取当定位
+			watchPostion:fn,        //监听位置变化
+			clearPositon:fn         //取消监听
+		}
+		国内三家地理定位服务商
+		-百度地图
+		-高德导航
+		-腾讯地图
+	地理定位-百度地图
+		 -注册百度开发帐户 (手机注册)
+		  http://lbsyun.baidu.com/
+		 -申请百度开发者 AccessKey (访问密码)
+		 -将百度地图程序直接嵌入网页中显示定位
+		 u70A5pnNrRtRT1XAgwM5jL2YIVj1Gv97
+		 --在程序添加AccessKey
+		 --<div id="container"></div>   显示地图容器
+		 --js
+		   1:创建地图对象
+		   2:创建坐标(经度纬度)
+		   3:显示地图级别(1-19)
+
+	3.3:html5新特性--WebWoker(了解)--代码3行
+		程序:指可以被CPU执行代码存储磁盘中 1.js 1.html
+		进程:指程序被OS调用内存中并且分配执行空间
+		线程:线程进程内部执行单位
+
+		chrome浏览器线程模型
+		一个chrome进程内部至少有6线程，向web服务器发送请求获取资源-----资源请求线程
+		还有一个线程负责将所有资源绘制网页上并且负责执行
+		css/js程序--UI主线程
+		<button>111</button>
+		<script src="1.js"></script>
+		<button>333</button>
+		原因:出现以上问题:执行js和绘制同一个UI主线线程
+		解决:创建一个新线程由它执行耗时js任务
+			<button>111</button>
+			<script>
+			   new Worker("js/02.js");
+			   -创建Worker对象
+			   -创建新线程执行js/02.js
+			<script>
+			<button>333</button>
+		#注意事项:浏览器不允许Worker执行js程序中,
+				  不能包含任何DOM/BOM对象
+				  不能运行JQuery
+	WebWoker(了解)--发送和接收数据
+		-Worker线程发送数据UI接收
+		   -worker 发
+		   postMessage(stringMsg);
+		   -ui     收
+		   var w = new Worker("js/02.js");
+		   w.onmessage = function(e){e.data}
+		-UI发送数据Worker接收
+		   -UI 发
+			var w = new Worker("js/02.js");
+			w.postMessage(stringMeg)
+		   -Worker收
+			onmessage = function(e){e.data}
+
+
+    
+
+	
+8、会话
+    session会话:操作过程
+		-当用户打开某个网站的第一个网页开始(会话开始)
+		-中间用户可以打开任意数量网页(会话中)
+		-当用户关闭浏览器(会话结束)
+    session对象:在服务器端(node.js)保存数据对象
+    session对象保存数据在会话中(开始,中)生效,一旦会话结束session对象也随之失效,其中保存数据丢失了

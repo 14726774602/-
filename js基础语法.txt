@@ -1,0 +1,148 @@
+js五大原始类型
+	数值型、字符串类型、布尔型、undefined、null
+
+数据类型转换
+	隐式转换
+		数字+字符串=字符串
+		数字+布尔=数字	true=>1	false=>0
+		字符串+布尔=字符串
+		null+1=1	null转换为0
+	强制转换
+		Number(str)	转为数值型
+		parseInt(str)	转为整型	开头非数字返回NaN，不是遇到非数字则返回前边的数字
+		parseFloat(str)	转为浮点型
+		str.toString()	转为字符串
+
+浏览器端函数
+	alert(str)	弹出警示框
+	prompt(str)	弹出输入框
+
+判断语句
+	if(条件){执行语句}else{执行语句}
+	switch(str){case n: 当str===n时执行语句;break//当前条件满足停止后面的语句;default:前面的条件不满足时执行的语句，一般放在最后}
+循环语句
+	while(条件){满足条件执行的语句}
+	do{先执行语句}while(条件语句)
+		break	结束循环
+		continue	跳过本次循环，继续执行下一次循环
+
+
+对象
+	内置构造函数创建对象
+		var  str=new Object();	创建空对象
+			str.title='标题'	添加属性
+			str['name']='姓名'	添加属性
+		遍历对象
+			for(var key in str){
+				key	属性名
+				str	遍历的对象
+				str[key]	通过属性名来找到属性值
+			}
+		判断
+			'title' in str	//判断str对象中是否存在title，有返回 true ，无返回false
+			对象.hasOwnProperty('title')	//判断str对象中是否存在title，有返回 true ，无返回false
+			对象.title===undefined	//有返回 true ，无返回false
+		自定义对象中的方法
+			var str={
+				name:'tom',
+				fun:function(){
+					console.log(this.name)	//this指代当前对象str
+				}
+			}
+			调用对象中的方法
+				str.fun()
+
+数组
+	创建索引数组
+		var arr=[1,2,3,4]
+	获取数组个数	arr.lendth
+	访问数组中的元素	arr[下标]	没有该下标，返货undefined
+	遍历数组
+		for(var i=0;i<arr.lenth;i++){
+			console.log(arr[i])	获取每个下标对应的元素
+		}
+		for(var key in arr){
+			console.log(arr[key])	获取下标key对应的元素
+		}
+
+	数组API
+		arr.toString()	将数组中的元素转为字符串，按照逗号分隔
+		arr.join('')	数组中的元素转为字符串，按照指定的字符分隔数组中的元素
+		arr1.concat(arr2,...)	拼接两个或多个数组
+		arr.slice(start,end)	截取数组中的元素，strt开始下标，end结束下标，不含end本身，负数表示倒数第几个
+		arr.splice(start,count,value1,value2....)	删除数组中的元素strt开始下标，count删除的数量，value1/2删除后替换的元素
+		arr.reverse()	翻转数组中的元素
+		arr.sort()	对数组中的元素排序，默认按照Unicode码从小到大排序
+			arr.sort(function(a,b){
+				return a-b	由小到大
+				//return b-a	由大到小	
+			})
+		arr.push('值')	往数组末尾添加一个元素，返回数组的长度
+		arr.pop()	删除数组末尾的元素，返回删除的元素
+		arr.unshift('值')	往数组开头添加一个元素
+		arr.shift()	删除开头的元素，返回删除的元素
+
+字符串对象
+	包装对象那个
+		将数据包装成字符串对象
+			var str=new String('abc')
+
+	字符串中的API
+		str.toUpperCase()	将英文字母转为大写
+		str.toLowerCase()	将英文字母转为小写
+		str.length()	获取字符串长度
+		str.charAt(下标)	获取下标对应的字符
+		str.CodeAt(下标)	查看下标对应的Unicode编码
+		str.indexOf('字符')	查找某个字符第一次出现的下标，找不到返回-1
+		str.lastIndexOf('字符')	查找每个字符最后一次出现的下边，找不到返回-1
+		str.slice(start,end)	截取字符串，从下标start开始，end结束，不包括end本身
+		str.substr(start,count)	截取字符串，从下标start开始，截取长度count，start为负从倒数开始截取
+		str.replace(value1,value2)	查找value1,并替换成value2,value1可以是字符串，也可以是正则表达式
+		str.match(value)	用于匹配字符串，返回一个数组
+		str.search(value)	用于查找满足条件的第一个字符的下标，找不到返回-1
+
+Math对象（数学对象）
+	API
+		num.abs()	取绝对值
+		num.floor()	向下取整
+		num.ceil()	向上取整
+		num.round()	四舍五入取整
+		num.max()	取一组数字的最大值
+		num.min()	取一组数字的最小值
+		pow(x,y)	得到x的y次幂的值
+		PI	得到圆周率π
+		random()	得到一个随机数，范围为0-1，可以为0，不含1
+		String.fromCharCode('编码')		通过Unicode码获得到应字符
+
+date对象
+	创建Date对象
+		new Date('2018/12/25/ 14:33:33')
+		new Date(2018,11,25,14,33,33)	参数分别为 年月日，时分秒	第二个参数为0~11，实际月份为 参数+1
+		new Date()	储存当前的系统时间
+		new Date(1000*60*60*24)	存储的是距离计算机元年的毫秒对应的日期时间
+
+Number对象
+	创建对象
+		new Number('数据')	创建对象，同时将数据转为数值型
+	API
+		num.toFixed(n)	保留小数点后n位
+		num.toString(n)	将数值型转为字符串类型，n设置转换额进制（2,4,8,16）
+		Number.MAX_VALUE	获取计算机能存储的最大数值
+		Number.MIN_VALUE	获取计算机能存储的最小数值
+
+Boolean对象
+	Boolean()/new Boolean()	创建Boolean对象，同时将数据转为布尔型
+	!!num	将数据转为布尔型
+	br.toString()	将布尔型数据转为字符串
+
+块级作用域
+	let声明变量，只能在块级作用域下访问，不存在声明提前
+	块级作用域	{} if-else while do-while for里边大括号都是块级作用域
+
+ES6
+	函数中的参数
+		function add(num1,num2=7){}		若调用时num2没有传入实参，则默认调用形参的值
+	模板字符串
+		console.log(`姓名：${变量}`)	可以获取到变量，添加到字符串中
+		
+

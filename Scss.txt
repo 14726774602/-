@@ -1,0 +1,77 @@
+Scss	css预处理器
+	有助于更好的管理样式文件，以及高效的开发项目
+	scss使用
+		在服务器端使用
+		安装scss编译程序
+			在线安装
+				npm install -g node-sass
+			本地安装，把四个文件复制进nodejs文件夹
+		安装测试
+			在命令行界面 输入 node-sass-v  测试当前版本
+		将sass文件转换为css文件
+			单文件的转换
+				当前路径>node-sass scss/01.scss css/01.css
+			多文件的转换
+				当前路径>node-sass scss -o css	(scss文件夹中所有的scss文件都转换为css文件中的样式文件)
+			单文件监听
+				node-sass -w scss/01.scss	css/01.css
+			多文件监听
+				node-sass -w scss -o css
+	
+		scss语法
+			变量
+				$my_color:#ff	//定义变量保存该颜色，要用时调用
+				$my_width:20px;
+				$my_font_size:10px;
+				div{
+					border-color:$my_color;	//在选择器中调用颜色变量
+				}
+			嵌套
+				#content{
+					div.top{
+						width:$my_width;
+					}
+					div p{
+						a{
+							color:$my_color;
+						}
+						span{
+							font-size:$my_font_size;
+						}
+					}
+
+				}
+				嵌套伪类时，需要在前面加 & 符号
+					a{
+						color:#444;
+						&:hover{
+							color:#f00;
+						}
+					}
+				样式属性嵌套
+					div{
+						border:{width:1px;style:solid;color:#f00}
+					}
+				导入sass文件
+					@import "文件名"	//文件名可以不加后缀
+				混合器
+					定义
+						@mixin corners{
+							color:#fff;
+							border:1px solid #f00;
+						}
+					调用
+						div{
+							font-size:14px;
+							@include corners;
+						}
+				
+				继承
+					.rounded{
+						border:1px solid #f00;
+						border-radius:30%;
+					}
+					.rounded-shadow{
+						@extend .rounded;
+						box-shadow:0 0 10px;
+					}

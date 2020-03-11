@@ -1,0 +1,142 @@
+﻿函数
+什么是函数：封装一项任务的步骤清单代码段的对象，再起一个名字
+为什么：重用
+怎么使用：......
+ 
+何时：只要一段代码可能被反复使用，都要创建函数
+	普通函数
+		定义函数	function str(形参){}
+		调用函数	str(实参)
+	匿名函数
+		定义函数	var str=function(形参){}
+		调用函数	str(实参)
+		函数自调用	(function(){
+						函数体
+					})();
+
+
+typeof str	查询数据类型
+API 接口函数
+	数组API
+		arr.toString()	将数组中的元素转为字符串，按照逗号分隔
+		arr.join('')	数组中的元素转为字符串，按照指定的字符分隔数组中的元素
+		arr1.concat(arr2,...)	拼接两个或多个数组
+		arr.slice(start,end)	截取数组中的元素，strt开始下标，end结束下标，不含end本身，负数表示倒数第几个
+		arr.splice(start,count,value1,value2....)	删除数组中的元素strt开始下标，count删除的数量，value1/2删除后替换的元素
+		arr.reverse()	翻转数组中的元素
+		arr.sort()	对数组中的元素排序，默认按照Unicode码从小到大排序
+			arr.sort(function(a,b){
+				return a-b	由小到大
+				//return b-a	由大到小	
+			})
+		arr.push('值')	往数组末尾添加一个元素，返回数组的长度
+		arr.pop()	删除数组末尾的元素，返回删除的元素
+		arr.unshift('值')	往数组开头添加一个元素
+		arr.shift()	删除开头的元素，返回删除的元素
+		arr.every(function(elem,i,arr){
+			return 判断结果
+		})	//every会自动拿着回调函数在每个元素上执行一次：elem 自动获取当前元素 i自动获得当前位置 自动得到当前数组对象
+			//利用当前获得的参数，判断当前元素是否符合要求，并返回判断结果，只有每个元素都返回true时，才整体返回true，否则返回false
+		arr.some(function(elem,i,arr){return 判断结果})
+			//some会自动拿着回调函数在每个元素上执行一次：elem 自动获取当前元素 i自动获得当前位置 自动得到当前数组对象
+			//利用当前获得的参数，判断当前元素是否符合要求，并返回判断结果，只要有一个元素返回true时，则返回true，否则返回false
+		arr.forEach(function(elem,i,arr){对原数组中的元素值执行的操作})
+		var newArr=arr.map(function(elem,i,arr){return 新值})	//依次取出每个元素，执行操作后，返回新值，放到新数组中
+		var subArr=arr.filter(function(elem,i,arr){return 判断条件})	选出满足条件的元素，放到新数组里面
+		var result=arr.reduce(function(prev,elem,i,arr){//prev 获得截止到当前的临时汇总值	return prev+elem},base //起始值)
+	字符串中的API
+		str.toUpperCase()	将英文字母转为大写
+		str.toLowerCase()	将英文字母转为小写
+		str.length()	获取字符串长度
+		str.charAt(下标)	获取下标对应的字符
+		str.CodeAt(下标)	查看下标对应的Unicode编码
+		str.indexOf('字符')	查找某个字符第一次出现的下标，找不到返回-1
+		str.lastIndexOf('字符')	查找每个字符最后一次出现的下边，找不到返回-1
+		str.slice(start,end)	截取字符串，从下标start开始，end结束，不包括end本身
+		str.substr(start,count)	截取字符串，从下标start开始，截取长度count，start为负从倒数开始截取
+		str.replace(value1,value2)	查找value1,并替换成value2,value1可以是字符串，也可以是正则表达式
+		str.match(value)	用于匹配字符串，返回一个数组
+		str.search(value)	用于查找满足条件的第一个字符的下标，找不到返回-1
+	Math(数值) API
+		num.abs()	取绝对值
+		num.floor()	向下取整
+		num.ceil()	向上取整
+		num.round()	四舍五入取整
+		num.max()	取一组数字的最大值
+		num.min()	取一组数字的最小值
+		pow(x,y)	得到x的y次幂的值
+		PI	得到圆周率π
+		random()	得到一个随机数，范围为0-1，可以为0，不含1
+		String.fromCharCode('编码')		通过Unicode码获得到应字符
+	Number API
+		num.toFixed(n)	保留小数点后n位
+		num.toString(n)	将数值型转为字符串类型，n设置转换额进制（2,4,8,16）
+		Number.MAX_VALUE	获取计算机能存储的最大数值
+		Number.MIN_VALUE	获取计算机能存储的最小数值
+	Boolearn API
+		!!num	将数据转为布尔型
+		br.toString()	将布尔型数据转为字符串
+遍历
+	for
+		for(var i=0;<arr.length;i++){
+			arr[i]	//当前元素
+		}
+	forEach
+		arr.forEach(elem,i,arr)=>{elem	//当前元素值}
+	for of	//
+		for(var elem of arr){elem	//当前元素值}
+	for in
+		for(var item in arr){item	//当前元素下标 arr[item] 表示当前值}
+箭头函数
+	是回调函数的另一种写法，与匿名函数不	完全一致
+		sort((a,b)=>{
+			return a-b
+		})
+		若函数体重只有一行代码，并且是return形式，可简化为
+			sort((a,b)=>a-b);
+
+
+全局函数
+	encodeURI(URL)	对URL进行编码
+	decodeURI(URL)	对已经编码的URL解码
+	isNaN(str)	检测数据是否为NaN	值为true/false
+	isFinite(str)	检测数据是否为有限值	值为true/false
+	eval(str)	执行字符串中的表达式	eval('1+3')	值为3
+	定时器
+		一次性定时器
+			var timer = setTimeout(()=>{console.log(1)},n)	//当间隔时间n毫秒到了，执行回调函数，只执行一次
+			clearTimeout(timer)	//清除定时器
+		周期性定时器
+			var timer = setInterval(()=>{console.log(1)},n)	//每隔n毫秒，执行一次回调函数
+			clearInterval(timer)	//清除定时器
+		立即执行定时器
+			process.nextTick(()=>{console.log(1)})	//当前事件的尾部执行
+			var timer = setImmediate(()=>{console.log(1)})	//下一组事件开头执行
+			clearImmediate(timer)	//清除定时器
+
+promise
+	何时：多个异步方法，要求必须顺序执行时
+	为什么：为了解决回调地狱问题
+		回调地狱：因为回调函数的嵌套层级太深导致的代码可读性差
+		根源：异步函数的下一项任务，只能在函数调用初期就提前传入函数
+	如何用
+		定义异步函数时
+			function fun(){
+				return new Promise(function(open){
+					异步函数任务的代码片段	
+					open()	//在当前异步任务结束最后一句话，自动执行 
+				})
+			}
+			return 为了让外边知道fun支持promise
+			new Promise()是造一个带开关和挂钩的盒子，用于与下一项任务连接
+			function()是必须的额，因为new Promise中封装的一段代码片段，所以必须放在function中
+			open 是new Promise 附赠的开关，打开开关，继续指向下一项任务，如果不开开关，则停留在当前任务，不再继续执行
+		异步执行时
+			fun().then(第二项任务函数).then(第三项任务函数).....then(function(){最后一项任务执行内容})
+			除了第一项任务，后面的任务函数 函数名后不要加() ，因为不是立即执行，如果第二项任务函数也支持promise，则可通过.then(函数名)，继续执行后面的函数
+			.then仅是一个连接器，将下一项任务函数连接到前一项任务的 open() 开关上，当前一项任务打开open 开关，才会执行 .then()中连接的下一项任务函数
+
+
+		
+
+

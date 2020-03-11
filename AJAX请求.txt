@@ -1,0 +1,45 @@
+同步请求和异步请求
+	同步：Synchronous
+		在一个任务进行中时，不能开启其他任务
+		同步请求：浏览器向服务器发送请求时，浏览器只能等待服务器的响应，不能做其他事情
+		场合：	
+			地址栏输入网址访问网页（网速不好时，更为明显）
+			a标签调转
+			submit提交
+	异步：Asynchronous
+		在一个任务开启时，可以开启其他的任务
+		异步访问：浏览器在向服务器发送请求时，不耽误用户在网页的其他操作
+		场合：
+			用户名等的验证
+			聊天室
+			搜索建议
+			股票走势图
+
+AJAX	Asynchronous javascript and Xml(现在使用json居多)
+	本质：使用js提供异步对象（XMLHttpRequest）异步向服务器发送请求，并接收返回的数据，ajax可以无刷新更改页面的布局内容
+	创建步骤
+		//1、创建异步对象
+			//通过判断window.XMLHttpRquest来判断浏览器是否支持标准创建
+			if(window.XMLHttpRequest){
+				var xhr = new XMLHttpRequest();		//支持，则以标准方式创建
+			}else{
+				var xhr = new ActiveXObject('Microsoft.XMLHttp')	//不支持，则以旧版本方式创建
+			}
+		//2、绑定监听事件(接收请求)
+			xhr.onreadystatechange = function(){
+				//此方法会被调用4次，所以需要通过readyState来获取调用次数，判断数据是否接收成功
+				//通过判断响应的状态码，判断响应的结果是否为正确的结果
+				if(xhr.readyState==4 && xhr.status==200){
+					//将响应的数据存储到变量result中
+					var result = xhr.responseText
+					console.log(result)
+				}
+			}
+		//3、打开连接（创建请求）
+			xhr.open('get/post','url',true)	//参数分别为，请求方法/请求的地址，接口/是否异步（true异步/false同步）
+		//4、发送请求
+			xhr.send(body)	//请求方法为 get，body为null，或者不写  请求方法为 post 要创建请求主体
+				//post请求,需要添加一步
+				xhr.setRequestHeader('Countent-type','application/x-www-form-urlencoded')	//设置application/x-www-form-urlencoded
+				var body = 'uname=' + uname.value + '&upwd=' + upwd.value	//设置响应主体
+				xhr.send(body)

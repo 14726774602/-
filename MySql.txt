@@ -1,0 +1,165 @@
+命令窗口常用命令
+	ipconfig	
+		查询本机ip地址
+	mysql.exe -hlocalhost -P3306 -uroot -p
+		连接mysql服务器 简写：mysql   -uroot
+	quit;
+		退出服务器的连接
+	show databases;	                  
+		显示当前服务器上所有的数据库
+	use 库名;		                  
+		进入/开始使用指定的数据库
+	show tables;                           
+		显示当前数据库中有哪些表
+	desc 表名;  	                          
+		查看指定表的列(描述表头)
+	Select  *  from 表名；                 
+		查询该表格中的所有记录行
+
+MySQL文件中常用命令
+	set names utf8;	                                       
+		设置mysql客户端连接mysqld服务器所用的字符集为UTF8
+	drop database if exists 库名；	                       
+		丢弃原有的数据库，如果存在的话
+	create database 库名 charset=utf8;			       
+		新建一个数据库，并指定编码格式为UTF8
+	create table 表名（列1 类型,列2 类型,列3 类型 ....）;
+		创建一个表格，多少列，并指定每列的数据类型
+			类型
+				(1)数值类型   —— 可用引号括起来也可以不用
+					整数数值类型：   student(  age TINYINT  )
+						TINYINT：微整数，占1字节，-128~127
+						SMALLINT：小整数，占2字节，-32768~32767
+						INT：整数，占4个字节, -2147483648~2147483647
+						BIGINT：大整数，占8个字节，.....
+					小数数值类型：  product( price DECIMAL(7, 4) ) 
+						FLOAT(M,D)：单精度浮点型，占4字节，3.4E38，计算时可能产生四舍五入
+						DOUBLE(M,D)：双精度浮点型，占8字节 1.8E300..，计算时可能产生四舍五入
+						DECIMAL(M,D)：定点小数，不会产生精度舍入   decimal
+							M 最多总的有效位数为M     D小数点后面的有效位数
+		
+					布尔数值类型：   product( isOnsale BOOL)
+						BOOL，布尔/真假类型只能取值为TRUE/FALSE。
+						注意：MySQL数据库中没有真正意义上的布尔类型，
+							TRUE等同于1，FALSE等同于0   不能用引号引起来
+				(2)日期时间类型  —— 必须用引号括起来
+					DATE：日期类型，形如'2017-5-10'
+					TIME：时间类型，形如'22:08:5'   
+					DATETIME：日期/时间类型，形如'2017-10-25 22:8:5'
+				(3)字符串类型  —— 必须用引号括起来   emp(resume ...)
+					CHAR(M)：定长字符串，比VARCHAR操作速度更快，M不能超过255
+					VARCHAR(M)：变长字符串，比CHAR更能节约空间，M不能超过65535
+					TEXT(M)：大型变长字符串，M不能超过2G
+	
+增：
+	Insert into 表名 values('值1','值2','值3'…)			
+		向创建好的表格录入数据
+删：
+	delete from '表' where '条件';				
+		删除满足条件的表格里面的数据
+改：
+	update '表' set 列1="修改内容1",列2="修改内容二"... where id="...";		
+		修改表格里满足条件的数据
+查：
+	简单查询：
+		查询特定的列：SELECT ename,salary FROM emp;
+		查询所有的列：SELECT * FROM emp;
+		列的别名：SELECT ename AS 姓名 FROM emp;
+		显示的不同的值：SELECT DISTINCT deptId FROM emp;
+		查询时进行计算：SELECT salary*12+2000 FROM emp;
+		查询结果升序/降序排序： SELECT * FROM emp ORDER BY salary ASC/DESC;
+		条件查询：
+			SELECT * FROM emp WHERE eid=5;
+			SELECT * FROM emp WHERE salary>3000;
+			SELECT * FROM emp WHERE salary>3000 AND sex=0;
+			SELECT * FROM emp WHERE deptId=10 OR deptId=30;
+			SELECT * FROM emp WHERE deptId IS NULL;
+		模糊条件查询：
+			SELECT * FROM emp WHERE ename LIKE '%E_';
+		分页查询：
+			SELECT * FROM emp LIMIT 0, 10;
+			SELECT * FROM emp LIMIT 10, 10;
+			SELECT * FROM emp LIMIT 20, 10;
+	复杂查询：
+MySQL中的列约束  用法 在列类型后面加入约束
+	Constraint：约束，数据库中某列上的数据往往必须符合某种规范，
+	如编号不能重复、年龄必须在一定范围、密码有长度限制、员工所在
+	部门必须真的存在......类似的限制/规范就称为“列约束”
+	(1)主键约束 —— PRIMARY  KEY
+		primary key
+ 		声明为主键的列上，不能出现重复值，也不能出现NULL值，
+		所有的记录会自动按照主键列上值由小到大排序 —— 因
+		此一个表中至多只能有一个主键列。
+	(2)非空约束 —— NOT NULL
+		Not null
+		声明为非空的列，不能出现NULL，但可以出现重复值。
+	(3)唯一约束 —— UNIQUE
+		unique
+		声明为唯一约束的列，不能出现重复的值，但可以
+		出现NULL，且允许多个NULL出现（两个NULL值是不等的）
+	(4)检查约束 —— CHECK
+		check
+		检查约束可以检查新插入的数据是否满足指定的条件，如：
+			student( age INT CHECK(age>=18  AND  age<=60)  )
+				MySQL不支持此约束！在链接服务器端之前就进行验证
+	(5)默认值约束 —— DEFAULT
+		default
+		student(sid INT, sex CHAR(1) DEFAULT '男' );  
+			使用默认值的方式
+			1)INSERT INTO student VALUES(10, DEFAULT);
+			2)INSERT INTO student(sid) VALUES(20);
+	(6)外键约束 —— FOREIGN KEY...REFERENCES
+  	 
+		外键列上可以出现NULL，也可以有重复值，但是必须保证“所有出现的值
+		在另一个表的主键列上存在”——外键列上的值“参考了”另
+		一个表上的主键值。
+		内键约束列，
+		定义位置在 定义内键表格的最后面
+			    内键约束列                外键约束列，必须有主见约束
+		FOREIGN KEY(familyId) REFERENCES 表名(fid)
+			举列：如公司部门表 编号（id） 一般作为外键约束列，而公司员
+			工信息表里的 所属部门编号（eid）一般作为内键约束列
+	（7）MySQL中使用自增列
+		id INT PRIMARY KEY AUTO_INCREMENT
+				    auto_increment
+			自增列：只能用于整数列，且必须是主键列。
+			自增列无需手工赋值，直接输入 null 会自动获取在当前最大值并在基础上+1插入。
+MySQL数据库
+	Oracle分支：MySQL
+	Martin分支：MariaDB	两者没有区别
+MySQL系统的使用
+
+  (1)服务器端：负责存储/管理数据，其中的数据都是二进制格式存储，人无法直接查看
+	下载链接：
+		mysql.com
+		mariadb.org
+		xampp.org = Apache+MySQL+PHP
+	c:/xampp/mysql/bin/mysqld.exe 服务器端启动程序
+  (2)客户端：负责连接到服务器，向服务器发送增删改查指令
+	c:/xampp/mysql/bin/mysql.exe  客户端软件
+	作用相当于银行的ATM终端客户机
+
+
+	2、
+	脚本模式：把要执行的多条命令编写在一个文本文件中，一次性的提交给服务器执行，适合于批量反复执行的多条语句。   
+		命令：     mysql -uroot < d:/xx.sql（脚本路径）回车
+sql命令分类：  仅作了解
+	DDL：Data Define language 定义数据结构
+		CREATE/DROP/ALTER
+	DML:Data Munipulate Language 操作数据
+		INSERT/DELETE/UPDATE
+	DQL:Data Query Language 查询数据
+		SELECT
+	DCL:Data Control Language 控制用户权限
+		GRANT（授权）/REVOKE(收权)
+		
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,121 @@
+DOM操作
+	js核心：ECMA Script
+	DOM: Document Object Model	//文档对象模型	让js动态操作页面元素
+	操作网页的内容，都要用到DOM
+	
+	简化获取元素
+		html:	
+			<div id="d1"></dvi>
+		js:		
+			var d1=document.getElementById('d1')	//获取标签元素
+			d1.innerHTML = ''		//修改/获取双标签中的内容
+			t1.value = ''	//获取修改input的值
+	DOM树
+		document 9	//整个网页	
+		element	1		//网页中标签
+		attribute 2	//标签中的属性
+		text 3		//标签中的内容
+			.nodeType获取节点类型的值
+				document.noneType 得到的值为 9
+			.nodeName	获取节点的元素名
+				document.noneName	得到的值为#document
+				document.body.noneName	得到的值为BODY
+			
+	查找元素
+		document.documentElement	<html>
+		document.head	<head>
+		document.body	<body>
+		按照节点关系查找元素，先获得一个元素 d1
+			节点树	不常用
+				父子关系
+					d1.parentNode	当前元素的父节点对象
+					d1.childNodes	当前元素的所有直接子节点对象
+					d1.fistChild	当前元素的第一个直接子节点对象
+					d1.lastChild	当前元素的最后一个直接子节点对象
+				兄弟关系
+					d1.previousSibling	当前元素的前一个兄弟节点对象
+					d1.nextSibling	当前元素的下一个兄弟节点对象
+		
+			元素树	首选
+				父子关系
+					d1.parentElement	当前元素的父元素对象
+					d1.children	当前元素的所有直接子元素对象
+					d1.fistElementChild	当前元素的第一个直接子元素对象
+					d1.lastElementChild	当前元素的最后一个直接子元素对象
+				兄弟关系
+					d1.previousElementSibling	当前元素的前一个兄弟元素对象
+					d1.nextElementSibling	当前元素的下一个兄弟元素对象
+
+		按照html特征查找
+			var elem=document.getElementById('id名')	按照id查找一个元素
+			var elems=任意父元素.getElementsByTagName('标签名')	可以任意父元素查找，不仅能找到直接子元素，而且能找到后代中所有符合条件的元素
+		按照选择器查找
+			var elem=任意父元素.querySelector('选择器')		只查找一个元素
+			var elems=任意父元素.querySelectorAll('选择器')		查找多个元素
+	
+	修改元素
+		elem.innerHTML	//获取或修改原始的HTML片段内容
+		elem.textCount	//获取或修改纯文本内容	去电内嵌的子标签，只保留内容 翻译特殊符号为正文
+		elem.value		//获取或修改表单元素中的值
+	
+	修改css属性
+		DOM核心API
+			var value=elem.getAttribute('属性名')	获取该属性名对应的属性值
+			elem.setAttribute('属性名','新值')		修改该属性名对应的属性值
+			elem.removeAttribute('属性名')			删除该属性名
+			var bool=elem.hasAttribute('属性名')	判断是否含有该属性
+
+		API简化
+			elem.属性名		获取或修改该属性名的值
+				class特殊注意，获取或修改class属性的值需要改成className
+					elem.className
+				值都是bool类型的，不能用核心DOM API修改，只能用HTML DOM来访问
+
+	自定义扩展属性
+		<div data-自定义属性名='值'></div>
+			不能用核心	DOM API 来操作自定义扩展属性
+		h5中获取和修改自定义属性值
+			elem.dataset.自定义属性名
+	
+	修改样式
+		获取修改内联样式
+			elem.style.属性名='值'		//修改内联样式，
+				如果属性名带 -  ，在js中该更改为驼峰命名的方式命名
+				如果是单位的数字属性，修改时,单位需要拼接到尾部 .style.width=12+'px';
+					获取时，必须去电末尾的px，才能进行计算	width="12.5px"	parseFloat(width)=>12.5
+
+	添加删除
+		创建一个空对象
+			var a=document.createElement('a')
+		设置关键属性
+			a.href='http://tmooc.cn';
+			a.innerHTML='go to tmooc'
+		将新对象挂载到DOM树指定位置(3种方法)
+			1、在父元素的结尾追加一个新元素
+				父元素.appendChild(a)
+			2、在父元素下的某个子元素之前插入
+				父元素.insertBefore(a,child)
+			3、替换父元素的某个子元素
+				父元素.replaceChild(a,child)
+优化：尽量减少修改DOM树的次数
+	因为每修改一次DOM树，浏览器都会重绘页面
+		页面加载过程
+			html=>DOM树=>加载树->排版->绘制
+		css->COM模型 ^
+	每次修改DOM树都会导致重排重绘
+	怎么解决
+		如果同时添加父元素和子元素，应该先在内存中将子元素添加到父元素中，最后再一次性将父元素添加到DOM树
+		如果父元素已经在页面上了，要同时添加多个平级子元素时，先将多个子元素临时加入文档片段对象中，在一次性将文档片段对象
+			文档片段对象将子元素送到DOM树后，自动释放
+		文档片段：内存中，临时保存多个平级元素的，虚拟的父元素
+			何时:同时添加多个平级子元素到DOM树时
+				先创建一个文档片段对象
+					var frag=document.createDocumentFragment();
+				将子元素添加到frag中
+					frag.appendChild(child)
+				将frag整体添加到DOM树
+					父元素.appendChild(frag)
+	
+		
+		
+	

@@ -1,0 +1,404 @@
+使用boot需要引入boot的相关文件
+中文镜像网站：http://www.bootcss.com
+英文官网：http://getbootstrap.com
+主要用于响应式布局、移动设备优先额WEB项目。
+使用boot时，需要将css和js文件引入
+
+按钮相关calss
+	buttom
+		设置按钮的背景颜色
+			btn-danger 危险红色
+			btn-success 成功绿色
+			btn-warning 警告黄色
+			btn-info     信息蓝色
+			btn-primary 主要
+			btn-secondary 次要
+			btn-dark"    深色
+			btn-light     浅色
+		边框颜色
+			btn-outline-danger  红色边框
+			btn-outline-success  绿色边框
+			btn-outline-info      蓝色边框
+			...其他颜色都适用
+		按钮大小
+			btn-lg   大按钮
+			btn-sm  小按钮
+			btn-block 块级按钮
+			btn-link 链接按钮
+
+图片class
+	rounded  倒角，圆角
+	rounded-circle  倒角，圆角50%
+	img-thumbnail 缩略图，或根据父元素的缩放而缩放
+	img-fluid 响应式图片，图片会缩放，但是不会超过原始大小
+
+字体class
+	字体颜色
+		text-danger/success/info/primary/warning....
+	字体的粗细
+		font-weight-bold/light/normal
+	文字对齐方式
+		text-left/right/center/justify
+	大小写/首字母大写
+		text-uppercase/lowercase/capitalize
+
+列表相关class
+	list-unstyled 去除标识符
+	基本类  
+		ul
+			list-group 列表组
+		li
+			list-group-item 列表项
+	acitve 列表项激活状态
+	disabled 禁用状态
+	列表项颜色
+		list-group-item-success/danger/warning.....
+
+table相关的样式
+	table 类名，让后面的td有上边框
+	table-bordered 带边框的表格
+	table-striped 隔行变色
+	table-hover 带悬停效果的表格
+	table-primary/danger/warning。。。。 表格颜色
+	响应式表格，用于table父元素上
+		table-responsive-sm/lg/md/xl
+
+边框
+	border 基本类,或者border-top/right/bottom/left
+	颜色 border-danger/warning/info...
+	清除边框 border-0  border-top-0。。。。。
+	倒角  rounded  
+	清除倒角  rounded-0
+
+显示
+	visible 显示
+	invisible 隐藏
+
+背景颜色
+	bg-danger/warning/success
+
+浮动
+	float-left/float-*-left 
+	float-right/float-*-right 
+	*代表屏幕分辨率：xl/lg/md/sm 
+	解决高度坍塌，父元素中添加clearfix
+
+尺寸
+	w-*/h-*
+	*:25/50/75/100
+	25%，50%，75%，100%
+
+内外边距
+	m-*/mt-*/mr-*/mb-*/ml-*
+	p-*/pt-*/pr-*/pb-*/pl-*
+	*:0   /    1  /      2    /    3    /    4     /    5 
+	  0     0.25rem  0.5rem    1rem     1.5rem     3rem
+
+栅格布局
+	1.最外层需要使用容器
+		container 定宽容器 （容器宽度写死了）
+		container-fluid 变宽容器 (容器宽度随着父元素改变)
+	2.容器中声明行  row (每一行等分12个单元格)
+	3.行中声明列  col col-n （n指的是n/12）
+	4.针对不同屏幕的需求使用不同的列名，并且指定每列所占的列宽
+		col-xl-1/2/3/...12
+		col-lg-1/2/3/...12
+		col-md-/1/2/3/4...12
+		col-sm-1/2/3/4..12
+			xl：Extra large 超大 >=1200px
+			lg:large 大PC屏    >=992px
+			md：medium 中屏pad   >=768px
+			sm:small   小屏      >=576px
+			xs:Extra small   超小屏
+	注意：不同屏幕下的列有适应性问题
+		col-xl-* 只在xl下有效
+		col-lg-* 在lg/xl下有效
+		col-md-* 在md/lg/xl有效
+		col-sm-* 在sm/md/lg/xl 有效
+			列可以在当前屏幕以及更大的屏幕下有效
+
+	可以使用"列偏移"实现指定列以及其后面的列向右移动
+		偏移量通过 offset-sm/md/lg/xl-n(1~11)来设置列横向移动的距离
+		
+弹性布局
+	使用d-flex/d-inline-flex 创建一个 弹性容器
+	设置主轴方向  flex-row/flex-row-reverse/flex-column/flex-column-reverse
+	设置主轴的排列方式 
+		   justify-content-n;
+				n:end center between around
+
+	响应式flex类
+		d-sm/md/lg/xl-flex
+		flex-*-row
+		flex-*-column
+
+表单
+	控件方向排列
+		<form>  form-group 堆叠表单，垂直方向显示
+        form-inline  内联表单，水平显示，内部可以写col样式
+	文本框/密码框基本类  form-control
+	多选框  form-check        块级，内边距1.25rem
+			form-check-inline  变成一个弹性容器
+			form-check-input  往左移动1.25rem
+			form-check-label  下外边距清0
+			form-text 块级，上外边距0.25rem
+
+组件
+	下拉菜单
+		外层div要写dropdown/dropup(上拉菜单)
+		内部有两个元素，button 和 放菜单的div 
+			button的类 dropdown-toggle--->添加下三角
+			放菜单的div.dropdown-menu---->display:none
+			在放菜单的div内部添加菜单项
+				<a class="dropdown-item"></a>
+				dropdown-item--->块级元素，纵向排列
+		button事件 data-toggle的自定义属性，值="dropdown"
+			这样，点击之后就可以自动让dropdown-menu显示
+		菜单项a标签，可以添加.active，选中菜单项
+			下拉菜单的三级结构
+				<div class="dropdown/dropup">
+				  <button class="dropdown/dropup-toggle" data-toggle="dropdown/dropup">下拉按钮</button>
+				  <div class="dropdown/dropup-menu">
+					 <a class="dropdown/dropup-item">菜单项</a>
+				  </div>
+				</div>
+			
+
+	按钮组
+		在外部包裹div上添加btn-group类，创建按钮组
+			<div class="btn-group btn-group-vertical">
+				<button class="btn btn-danger">Apple</button>
+				<button class="btn btn-warning">HuaWei</button>
+				<button class="btn btn-primary">SamSung</button>
+			</div>
+		使用btn-group-lg/sm 控制按钮组大小
+		使用btn-group-vertical 来创建垂直按钮组
+
+	信息提示框
+		<div class="alert alert-danger w-50 alert-dismissible">
+			<span class="close" data-dismiss="alert">&times;</span>
+			请检查用户信息
+		</div>
+		提示框使用alert当作基本类
+		alert-danger/warning/.....改变提示框颜色
+		.alert-dismissible .close{}的组合在控制关闭的小x在右边
+		点击小x能够关闭提示框，data-dismiss="alert"
+
+	导航
+		boot提供了 三种形式的导航：水平导航，选项卡导航，胶囊导航
+		水平导航
+			通过设置ul的nav让内部li变为弹性布局
+			所有的弹性样式都可以使用
+				justify-content-end/center/between/around
+				flex-row/column......
+			三层结构 ul.nav.nav-justified>li.nav-item>a.nav-link
+				.nav-justified .nav-item配合，让每个导航项等宽显示
+				<ul class="nav">
+				   <li class="nav-item">
+					  <a class="nav-link"></a>
+				   </li>
+				</ul> 
+		选项卡导航
+			使用.nav-tabs类可以将导航转换为选项卡
+			选项卡的内容，使用div.tab-content>div.tab-pane(隐藏)切换选项卡
+				<a data-toggle="tab" href="#内容的id" class="active">
+				<ul class="nav nav-tabs">
+					<li class="nav-item">
+					  <a class="nav-link active" data-toggle="tab" href="#home">Home</a>
+					</li>
+				.......
+				</ul>
+				<!-- 要显示的内容-->
+				<div class="tab-content">
+					<div id="home" class="tab-pane active">home....</div>
+				.....
+				</div>
+		胶囊导航 
+			.nav-pills 可以将导航设置成胶囊形状
+			胶囊动态导航只需要将选项卡中data-toggle="pill"  
+			其它同选项卡导航一样
+	导航栏
+		是div>ul>li>a
+		div
+			navbar(创建导航栏) navbar-expand-xl/lg/md/sm(来创建响应式的导航栏，大屏幕横向展开，小屏幕垂直堆叠)
+		ul
+			navbar-nav
+		li
+			nav-item
+		a
+			nav-link
+		设置导航栏时，可以在div中使用bg-颜色设置不同的背景颜色
+	折叠
+	控制内容的隐藏与显示
+		在<a>或者<button>中添加data-toggle="collapse"
+		指向目标内容的id
+			<a href="#id"></a><button data-target="#id">
+	内容div.collapse 同时添加id
+		<button class="btn btn-success" data-toggle="collapse" data-target="#demo">折叠按钮</button>
+		<!-- 折叠内容-->
+		<div id="demo" class="collapse"></div>
+	折叠导航栏
+		创建折叠导航栏，需要在外层div class="navbar nav-expand-sm bg-* navbardark/ligth"  navbar-dark/navbar-light 控制是内部brand的字体颜色和按钮中三条横线的颜色
+
+		外层div内部有不被折叠的a标签 a.navbar-brand
+
+		隐藏的按钮button.navbar-toggler 根据外包裹div是navbar-dark/light.选取不同的字体颜色和边框颜色，同时在屏幕sm以上隐藏
+		
+		被折叠的导航栏div.collapse+.navbar-collapse+#id
+
+		给button添加折叠事件和折叠目标 data-toggle="collapse" data-target="#id"
+
+			<div class="container-fluid">
+				<div class="navbar navbar-expand-md bg-dark navbar-dark">
+					<a href="" class="navbar-brand">Bootstrap中文网</a>
+					<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#content">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div id="content" class="collapse navbar-collapse ">
+						<ul class="navbar-nav ">
+							<li class="nav-item"><a class="nav-link" href="">Boot2</a></li>
+							......
+						</ul>
+					</div>
+				</div>
+			</div>
+
+		
+		
+	卡片	
+		<div class="card">
+			<div class="card-header">卡片标题</div>
+			<div class="card-body">卡片主体</div>
+			<div class="card-footer">卡片结尾</div>
+		</div>
+	
+	手风琴（卡片+折叠）
+		<div id="parent">
+			<div class="card">
+                <div class="card-header">
+                    <a href="#coll-one" data-toggle="collapse" class="card-link">卡片一</a>
+                </div>
+				<!--show设置默认首选项-->
+                <div class="collapse show" id="coll-one" data-parent="#parent" >
+                    <div class="card-body ">
+                        海贼王
+                    </div>
+                </div>
+            </div>
+			........
+		</div>
+
+	媒体查询
+		<h3>媒体查询</h3>
+        <div class="border p-3 media">
+            <img src="../../img/1.jpg" alt="">
+            <div class="media-body">
+                <h4>纳兰性德</h4>
+                <p>清朝著名词人，康熙御前侍卫</p>	
+            </div>
+        </div>
+
+	轮播图
+		<!--轮播图外包裹.carousel，要让图动起来，需要设置运动方式为旋转木马的方式data-ride="carousel"，以及过渡方式.slide-->
+		<div id="#demo" class="carousel slide" data-ride="carousel">
+            <!--轮播图片,所有的图片都放在carousel-inner里-->
+            <div class="carousel-inner">
+                <!--每一张图片分别放在carousel-item中 需要给其中一张图片设置active，才能显示图片-->
+                <div class="carousel-item active">
+                    <img class="w-100" src="../../img/img/banner1.png" alt="">
+                </div>
+                .......
+            </div>
+             <!--轮播指示器,carousel-indicators绝对定位，水平居中对齐，横向弹性布局-->
+            <ul class="carousel-indicators ">
+                <!--点击滑动事件，点击滑动到第几张图片data-slide-to="0" .设置点击后的目的data-toggle="#id"-->
+                <li class="active" data-slide-to="0" data-target="#demo"></li>
+            </ul>
+            <!--轮播箭头-->
+            <a class="carousel-control-prev " data-slide="prev" href="#demo">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next " data-slide="next"  href="#demo">
+                <span class="carousel-control-next-icon"></span>
+            </a>
+        </div>
+
+	模态框
+		<!--打开模态框的按钮-->
+        <button class="btn btn-danger" data-toggle="modal" data-target="#demo">打开模态框</button>
+        <!--模态框内容-->
+        <div id="demo" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        钟其杰
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">就放手吧，别想他</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+小组件
+	徽章
+		<ul class="list-unstyled">
+            <li>赞
+                <a href="" class="badge badge-danger badge-pill">91</a>
+            </li>
+			....
+        </ul>
+
+	巨幕
+		<div class="jumbotron">
+            <h3>就是有很大的内边距</h3>
+        </div>
+
+	分页
+		<ul class="pagination pagination-lg/sm ">
+			<li class="page-item disabled(禁用)/active(选中)">
+				<a href="#" class="page-link">页码</a>
+			</li>
+			......
+		</ul>
+	
+	面包屑导航
+		<ul class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="">首页</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="">学习用品</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="">笔记本电脑</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="">华为</a>
+            </li>
+			......
+        </ul>
+
+	进度条
+		<h3>进度条</h3>
+        <!--进度条的槽，背景浅灰色-->
+        <div class="progress">
+            <!--进度条的占比,颜色-->
+            <div class="progress-bar w-75 bg-success"></div>
+        </div>
+        <h3>条纹进度条</h3>
+        <div class="progress">
+            <div class="progress-bar bg-danger w-50 progress-bar-striped "></div>
+        </div>
+        <h3>会动的条纹进度条</h3>
+        <div class="progress">
+            <div class="progress-bar bg-danger w-50 progress-bar-striped progress-bar-animated "></div>
+        </div>
+        <h3>组合的进度条</h3>
+        <div class="progress">
+            <div class="progress-bar  w-50">危险</div>
+            <div class="progress-bar bg-warning w-25 progress-bar-striped ">一般</div>
+            <div class="progress-bar bg-danger w-25 progress-bar-striped progress-bar-animated">安全</div>
+        </div>

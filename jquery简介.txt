@@ -1,0 +1,165 @@
+第三方开发的及其简化DOM的API
+	JQuery是DOM操作的终极简化
+		简化了增删改查、事件绑定、动画、ajax
+		解决了大部分浏览器兼容性问题，几乎所有的项目或框架底层DOM操作，都是由JQuery实现的
+	使用
+		JQuery.com	下载
+		1.x	兼容IE8
+		2.x	不再兼容IE8
+		3.x	不再兼容IE8 增加了新特性  运行在严格模式下  用for of代替了.each()方法  支持promise
+		先将JQuery引入到页面中
+			<script src=".../jquery-1.11.3.js"></script>
+		使用JQuery简化API，需要先创建JQuery对象并封装DOM元素对象
+			先用选择器查找，再创建
+				var $btn=$('#btn')
+			如果已经获得DOM元素，可直接封装,封装后的元素才能使用JQuery的方法
+				var $btn=$(this.元素)
+	特性
+		1、自带便利效果，在对JQuery对象调用一次API，等效于自动对内部所有DOM元素都调用API
+		2、一个函数两用，即可获取值，也可修改值
+		3、链式调用
+			$btn.fun1().fun2()	对象依次调用fun1()，然后调用fun2()
+	
+	查询
+		按照选择器查找
+			var $elem=$('选择器')
+				CSS过滤选择器
+					父 后代
+					父>子
+					兄+弟	找到下一个兄弟元素
+					兄~弟	找到当前所有的兄弟元素
+					:fist-child  :last-child  :nth-child(n)
+					:nth-child(2n)	偶数行
+				JQuery简化过滤选择器
+						:first/last	第一个子元素/最后一个子元素
+						:eveb/odd	偶数行子元素/奇数行子元素
+						:eq(i)/gt(i)/lt(i)	下标等于i的子元素/下标大于i的子元素/下标小于i的子元素 i从0开始	
+				可见性过滤器
+					:hidden	匹配隐藏的元素
+					:visible	匹配显示的元素
+				内容过滤
+					:contains('文本')	匹配元素内容中包含指定文本的元素
+					:has(选择器)	匹配包含满足选择器要求的子元素的父元素
+					:parent	选择内容非空的元素
+				转态过滤
+					:enable	匹配所有启用的表单元素（input button 是否可用）
+					:disable	匹配所有禁用的表单元素
+					:selected	匹配被选择的 <option> 元素。
+					:checked	匹配所有选中的复选框或单选按钮
+				表单过滤
+					:input 匹配所有表单元素 input select textarea button
+					:[type] 匹配type为指定类型的input元素
+						:text	匹配type='text'的input元素
+						:passworld 匹配type='passworld'的input 元素
+	修改/获得内容
+		$elem.html(['html 片段'])/.html()	插入/获得html片段
+		$elem.text(['文本内容'])/.text()	写入/获得纯文本内容
+		$elem.val([值])/.value()	修改/获得表单元素的值
+	修改/获得属性
+		:$elem.attr('属性名','属性值')/.attr('属性名')	修改/获得属性
+		:$elem.prop('属性名','属性值')/.prop('属性名')	修改/获得属性
+	修改css样式
+		$elem.css('css属性','值')/('css属性')	修改/获得属性值 一次只能修改一个css样式
+		$elem.css({
+			css属性1:'值',
+			css属性2:'值',
+			........
+		})	//修改多个css样式，属性名必须去横线变为驼峰
+	修改多个css样式，操作class批量修改样式
+		$btn.addClass('class1','class2','class3'...)	//批量添加样式
+		$btn.removeClass('class1')		//批量删除样式
+		$btn.hasClass('class')		//查询元素是否包含该样式属性
+		$btn.toggleClass('class')	//判断是否含有该属性，没有就添加，有就移除
+		$btn.isClass('标签名')	//判断该元素是否是该 标签
+	
+
+	按照节点关系查找元素
+		$elem.parent()	查找当前元素的父元素
+		$elem.children(['选择器'])	可直接获取当前元素中符合要求的元素
+		$elem.find('选择器')	可在所有后代中查找符合条件的元素
+		$elem.children(':first-child')
+		$elem.children(':last-child')
+		$elem.prev()	选择当前元素的前一个兄弟元素
+		$elem.prevAll()	选择当前元素之前的所有兄弟元素
+		$elem.next()	选择当前元素的后一个元素
+		$elem.nextAll()	选择当前元素之后的所有兄弟元素
+		$elem.siblings()	选择除了自己以外的所有兄弟元素
+		3. 添加/删除/替换/克隆
+	添加:
+		用html片段创建新元素: 
+			var $a=$(`<a href="http://tmooc.cn">go to tmooc</a>`);
+		将新元素添加到DOM树上
+			1.追加: 
+				$父元素.append($a)   末尾追加
+					$a.appendTo(父元素).对a做其它操作  末尾追加
+				$父元素.prepend($a)  在开头插入
+					$a.prependTo(父元素) .对a做其它操作  在开头插入
+			2. 中间插入:
+				$child.before($a)  将a插入到child之前
+				$a.insertBefore(child)  将a插入到child之前
+				$child.after($a)   将a插入到child之后
+				$a.insertAfter(child)   将a插入到child之后
+			3. 替换:
+				$child.replaceWith($a)  用a代替child
+				$a.replaceAll(child) .对a做其它操作     用a代替child
+	删除: $elem.remove();
+	克隆: var $elem2=$elem.clone();
+	事件绑定: 
+		绑定事件处理函数: 
+			.on("事件名",处理函数); //代替addEventListener()
+		对于常用的21种事件，可进一步简写为:
+			.事件名(处理函数)
+		利用冒泡: 
+			$父元素.on("事件名","选择器",处理函数)
+		2个难题: 
+			1. this 又可以用了 => e.target
+			2. if($xx.is("条件选择器")) 不用再写
+				仅把选择器提前到第二个参数上。
+			强调: "选择器"必须现对于$父元素内编写
+
+		解绑: .off("事件名",处理函数);
+ 
+	页面加载后自动执行: 
+		问题: 直接放在js文件中，不属于任何事件的代码，只要页面引入就立刻执行。如果在head中引入，极可能找不到页面元素，导致错误。
+		解决: 所有代码都要放在“页面加载完成”事件中。等待事件发生时，才执行。
+	2个“加载完成事件”
+		1. 仅DOM内容加载完成：DOMContentLoaded 提前
+			仅等待HTML和JS加载完就提前触发
+			何时: 和css，图片无关的代码，都要放在DOMContentLoaded中
+			如何: $(document).ready(function(){
+				//会在document(DOM)准备好之后自动触发
+			})
+			$().ready(function(){})
+			$(function(){})
+	2. 整个网页加载完成: Load 延迟
+		需要等整个网页(HTML,JS,CSS,图片)都完成才触发
+		何时: 依赖css和图片的代码，只能放在load中
+		如何: $(window).load(function(){
+            //.addEventListener("load",...)
+  			//所有页面内容都加载完才能触发
+        })
+
+	鼠标事件: 
+		.mouseover()   .mouseout()
+			问题: 即使进出子元素，也会频繁触发父元素上的处理函数
+			解决: .mouseenter()  .mouseleave()
+		如果同时不绑定mouseenter和mouseleave
+			其实，只需要绑定一个hover:
+				$elem.hover(//等效于同时绑定了mouseenter和leave
+				function(){ ... }, //给mouseenter
+				function(){ ... } //给mouseleave
+		更简化: 如果两个处理函数可用toggleXXX简写为一个
+			其实只要给一个处理函数即可。
+			$elem.hover(function(){  xxxx.toggleXXX()  })
+ 
+	模拟触发: 没有点击按钮，也想执行按钮的处理函数
+		如何: $("按钮").trigger("事件名")
+		比如: $("#btnSearch").trigger("click")
+		可以更简化: $("按钮").事件名()
+
+
+
+
+
+		
+		
