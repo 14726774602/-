@@ -1,0 +1,11 @@
+微信QQ打开网页时提示使用浏览器打开：
+https://www.cnblogs.com/jackson-yqj/p/9838935.html
+
+谷歌模拟微信QQ打开网页
+https://dedewp.com/17747.html
+
+css动画样式库
+https://www.cnblogs.com/xiaohuochai/p/7372665.html
+
+js将链接生成二维码
+https://www.cnblogs.com/zcy1995/p/11526371.html
