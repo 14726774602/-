@@ -1,0 +1,19 @@
+<marquee id="gonggao" scrollamount="3" scrolldelay="100" direction="left" onclick="hotNewsHistory()" onmouseover="this.stop();" onmouseout="this.start();">横向跑马灯</marquee>
+
+cursor: pointer;	鼠标移入变成小手
+var a = Math.floor(Math.random() * n)    向下取整生成随机数
+
+
+//定时器设置字体颜色的变化
+<div id="blink">闪烁的文字</div>
+<script language="javascript">
+	function changeColor() {
+		var color = "#f00|#0f0|#00f|#880|#808|#088|yellow|green|blue|gray";
+		color = color.split("|");
+		document.getElementById("blink").style.color = color[parseInt(Math.random() * color.length)];
+	}
+	setInterval("changeColor()", 200);
+</script>
+
+
+<span style="font-weight: bold;font-size: 24px; line-height: 1.5;background: linear-gradient(to right,#f4324e,#ffc107, blue,#dc175a,red);-webkit-background-clip: text;color: transparent;">渐变的文字</span>
